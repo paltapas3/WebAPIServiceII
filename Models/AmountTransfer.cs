@@ -6,6 +6,7 @@ namespace WebAPIServiceII.Models
     {
         public string Amount { get; set; }
         public string Account_No { get; set; }
+        public string Transfer_Type { get; set; }
         public string IFSC { get; set; }
         public string DOT { get; set; }
     }
