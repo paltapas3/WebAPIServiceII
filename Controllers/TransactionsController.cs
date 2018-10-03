@@ -25,7 +25,7 @@ namespace WebAPIServiceII.Controllers
 
 
         [HttpPost]
-        public ActionResult<List<Transactions>> Create(Transactions trans)
+        public ActionResult<Transactions> Create(Transactions trans)
         {
             DBUtils du = new DBUtils();
 
