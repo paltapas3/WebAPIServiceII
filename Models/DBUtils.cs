@@ -35,31 +35,35 @@ public class DBUtils
                 conn.Open();
                 
 
-               /* SqlCommand cmd1 = new SqlCommand("INSERT INTO Transactions VALUES (@ACCOUNTNUMBER_DEBITED, @ACCOUNTNUMBER_CREDITED, @AMOUNT, @TRANSACTIONNUMBER, @Date)", conn);
-                               
+               
+                
+                //Debiting Amount
+                SqlCommand cmd2 = new SqlCommand("update [dbo].[UserAccount] set U_BALANCE=U_BALANCE-@AMOUNT where U_ACCOUNTNUMBER=@ACCOUNTNUMBER_DEBITED", conn);
+                cmd2.Parameters.AddWithValue("@AMOUNT", trans.Amount);
+                cmd2.Parameters.AddWithValue("@ACCOUNTNUMBER_DEBITED", trans.AccountNumber_Debited);
+                //Crediting Amount
+                SqlCommand cmd3 = new SqlCommand("update [dbo].[UserAccount] set U_BALANCE=U_BALANCE+@AMOUNT where U_ACCOUNTNUMBER=@ACCOUNTNUMBER_CREDITED", conn);
+                cmd3.Parameters.AddWithValue("@AMOUNT", trans.Amount);
+                cmd3.Parameters.AddWithValue("@ACCOUNTNUMBER_CREDITED", trans.AccountNumber_Credited);
+                //Updating Transactions table
+
+                SqlCommand cmd1 = new SqlCommand("INSERT INTO Transactions VALUES (@ACCOUNTNUMBER_DEBITED, @ACCOUNTNUMBER_CREDITED, @AMOUNT, @TRANSACTIONNUMBER, @Date)", conn);
+
                 cmd1.Parameters.AddWithValue("@ACCOUNTNUMBER_DEBITED", trans.AccountNumber_Debited);
                 cmd1.Parameters.AddWithValue("@ACCOUNTNUMBER_CREDITED", trans.AccountNumber_Credited);
                 cmd1.Parameters.AddWithValue("@AMOUNT", trans.Amount);
                 cmd1.Parameters.AddWithValue("@TRANSACTIONNUMBER", trans.TransactionNumber);
                 cmd1.Parameters.AddWithValue("@Date", trans.Date);
-                */
 
-                SqlCommand cmd2 = new SqlCommand("update [dbo].[UserAccount] set U_BALANCE=U_BALANCE-@AMOUNT where U_ACCOUNTNUMBER=@ACCOUNTNUMBER_DEBITED", conn);
-                cmd2.Parameters.AddWithValue("@AMOUNT", trans.Amount);
-                cmd2.Parameters.AddWithValue("@ACCOUNTNUMBER_DEBITED", trans.AccountNumber_Debited);
-
-                SqlCommand cmd3 = new SqlCommand("update [dbo].[UserAccount] set U_BALANCE=U_BALANCE+@AMOUNT where U_ACCOUNTNUMBER=@ACCOUNTNUMBER_CREDITED", conn);
-                cmd3.Parameters.AddWithValue("@AMOUNT", trans.Amount);
-                cmd3.Parameters.AddWithValue("@ACCOUNTNUMBER_CREDITED", trans.AccountNumber_Credited);
-                //cmd1.Parameters.AddWithValue("@AMT", trans.Amount);
                 transObj = conn.BeginTransaction();
                 cmd2.Transaction = transObj;
                 cmd3.Transaction = transObj;
+                cmd1.Transaction = transObj;
                 try {
                   //  cmd1.ExecuteNonQuery();
                     cmd2.ExecuteNonQuery();
                     cmd3.ExecuteNonQuery();
-                    
+                    cmd1.ExecuteNonQuery();
 
                     transObj.Commit();
                     return trans;
