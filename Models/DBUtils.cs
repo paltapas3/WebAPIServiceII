@@ -86,6 +86,67 @@ public class DBUtils
     }
 
 
+    public List<Transactions> getTransactions()
+    {
+        List<string> error = new List<string>();
+        List<Transactions> transList = new List<Transactions>();
+        Transactions transaction;
+
+        try
+        {
+            var cb = new SqlConnectionStringBuilder();
+            cb.ConnectionString = "Data Source=openshift.database.windows.net;Initial Catalog=BankAccountDB;User ID=user;Password=database@12345";
+
+            using (SqlConnection connection = new SqlConnection("Data Source=openshift.database.windows.net;Initial Catalog=BankAccountDB;User ID=user;Password=database@12345"))
+            {
+
+
+
+                using (SqlCommand command = new SqlCommand("select * from Transactions", connection))
+                {
+                    connection.Open();
+                    SqlDataReader result = command.ExecuteReader();
+                    while (result.Read())
+                    {
+                        transaction = new Transactions();
+                        transaction.Tid = result["T_ID"];
+                        transaction.AccountNumber_Debited = result["ACCOUNTNUMBER_DEBITED"].ToString();
+                        transaction.AccountNumber_Credited = result["ACCOUNTNUMBER_CREDITED"].ToString();
+                        transaction.Amount = result["AMOUNT"].ToString();
+                        transaction.TransactionNumber = result["TRANSACTIONNUMBER"];
+                        transaction.date = result["Date"].ToString();
+                       
+
+                        //error.Add(result["U_ID"].ToString()+","+ result["U_NAME"].ToString()+","+ result["U_ADDRESS"].ToString()+","+ result["U_PAN"].ToString()+","+ result["U_ACCOUNTTYPE"].ToString()+","+ result["U_BALANCE"].ToString()+","+ result["U_GENDER"].ToString()+","+ result["U_EMAIL"].ToString()+","+ result["U_DOB"].ToString());
+
+                    }
+
+
+                    connection.Close();
+                }
+            }
+        }
+        catch (SqlException e)
+        {
+            string errormsg = string.Empty;
+            for (int i = 0; i < e.Errors.Count; i++)
+            {
+                errormsg = errormsg + e.Errors[i].ToString();
+            }
+            transList.Add(new Transactions { TransactionNumber = errormsg });
+
+
+        }
+        catch (Exception e)
+        {
+            transList.Add(new Transactions { TransactionNumber = e.StackTrace });
+
+        }
+
+        return transList;
+    }
+
+
 
 
 

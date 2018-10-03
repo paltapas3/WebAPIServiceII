@@ -15,13 +15,13 @@ namespace WebAPIServiceII.Controllers
     public class TransactionsController : ControllerBase
     {
 
-        //[HttpGet]
-        //public ActionResult<List<Transactions>> GetAll()
-        //{
-        //    DBUtils du = new DBUtils();
+        [HttpGet]
+        public ActionResult<List<Transactions>> GetAll()
+        {
+            DBUtils du = new DBUtils();
 
-        //    return du.getUsers();
-        //}
+            return du.getTransactions();
+        }
 
 
         [HttpPost]
