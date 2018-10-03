@@ -118,13 +118,13 @@ public class DBUtils
                     while (result.Read())
                     {
                         transaction = new Transactions();
-                        transaction.Tid =Convert.ToInt32( result["T_ID"]);
+                        transaction.Tid =Convert.ToInt32(result["T_ID"]);
                         transaction.AccountNumber_Debited = Convert.ToInt32(result["ACCOUNTNUMBER_DEBITED"]);
                         transaction.AccountNumber_Credited = Convert.ToInt32(result["ACCOUNTNUMBER_CREDITED"]);
                         transaction.Amount = Convert.ToInt32(result["AMOUNT"]);
                         transaction.TransactionNumber = result["TRANSACTIONNUMBER"].ToString();
                         transaction.Date = result["Date"].ToString();
-                       
+                        transList.Add(transaction);
 
                         //error.Add(result["U_ID"].ToString()+","+ result["U_NAME"].ToString()+","+ result["U_ADDRESS"].ToString()+","+ result["U_PAN"].ToString()+","+ result["U_ACCOUNTTYPE"].ToString()+","+ result["U_BALANCE"].ToString()+","+ result["U_GENDER"].ToString()+","+ result["U_EMAIL"].ToString()+","+ result["U_DOB"].ToString());
 
