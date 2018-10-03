@@ -19,7 +19,9 @@ public class DBUtils
     {
 
         List<string> error = new List<string>();
-       
+        Random generator = new Random();
+        //string TransNumber = "DU" + generator.Next(0, 99999);
+
         string val = "";
         try
         {
@@ -41,10 +43,17 @@ public class DBUtils
                 cmd1.Parameters.AddWithValue("@TRANSACTIONNUMBER", trans.TransactionNumber);
                 cmd1.Parameters.AddWithValue("@Date", trans.Date);
 
-               // SqlCommand cmd2 = new SqlCommand("update table [dbo].[UserAccount] set ", conn);
+                SqlCommand cmd2 = new SqlCommand("update [dbo].[UserAccount] set U_BALANCE=U_BALANCE-(Select Amount from Transactions where ACCOUNTNUMBER_DEBITED=@ACCOUNTNUMBER_DEBITED) where U_ACCOUNTNUMBER=@ACCOUNTNUMBER_DEBITED", conn);
+                cmd2.Parameters.AddWithValue("@ACCOUNTNUMBER_DEBITED", trans.AccountNumber_Debited);
+
+                SqlCommand cmd3 = new SqlCommand("update [dbo].[UserAccount] set U_BALANCE=U_BALANCE+(Select Amount from Transactions where ACCOUNTNUMBER_CREDITED=@ACCOUNTNUMBER_CREDITED) where U_ACCOUNTNUMBER=@ACCOUNTNUMBER_CREDITED", conn);
+                cmd3.Parameters.AddWithValue("@ACCOUNTNUMBER_CREDITED", trans.AccountNumber_Credited);
+                //cmd1.Parameters.AddWithValue("@AMT", trans.Amount);
 
                 try {
                     cmd1.ExecuteNonQuery();
+                    cmd2.ExecuteNonQuery();
+                    cmd3.ExecuteNonQuery();
                     //cmd2.ExecuteNonQuery(); // Throws exception due to foreign key constraint  
 
                     transObj.Commit();

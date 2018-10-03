@@ -28,6 +28,9 @@ namespace WebAPIServiceII.Controllers
         public ActionResult<Transactions> Create(Transactions trans)
         {
             DBUtils du = new DBUtils();
+            //Random generator = new Random();
+            //string TransNumber = "DU" + generator.Next(0, 99999);
+            //trans.TransactionNumber = TransNumber;
 
             return du.AddTransactions(trans);
         }
