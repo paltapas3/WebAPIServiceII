@@ -114,7 +114,7 @@ public class DBUtils
                         transaction.AccountNumber_Credited = Convert.ToInt32(result["ACCOUNTNUMBER_CREDITED"]);
                         transaction.Amount = Convert.ToInt32(result["AMOUNT"]);
                         transaction.TransactionNumber = result["TRANSACTIONNUMBER"].ToString();
-                        transaction.date = result["Date"].ToString();
+                        transaction.Date = result["Date"].ToString();
                        
 
                         //error.Add(result["U_ID"].ToString()+","+ result["U_NAME"].ToString()+","+ result["U_ADDRESS"].ToString()+","+ result["U_PAN"].ToString()+","+ result["U_ACCOUNTTYPE"].ToString()+","+ result["U_BALANCE"].ToString()+","+ result["U_GENDER"].ToString()+","+ result["U_EMAIL"].ToString()+","+ result["U_DOB"].ToString());
