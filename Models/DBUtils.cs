@@ -15,7 +15,7 @@ public class DBUtils
     {
     }
 
-    public Transactions AddTransactions(Transactions trans)
+    public Transactions UpdateTransactions(Transactions trans)
     {
 
         List<string> error = new List<string>();
@@ -45,11 +45,11 @@ public class DBUtils
                 */
 
                 SqlCommand cmd2 = new SqlCommand("update [dbo].[UserAccount] set U_BALANCE=U_BALANCE-1000 where U_ACCOUNTNUMBER=@ACCOUNTNUMBER_DEBITED", conn);
-                cmd2.Parameters.AddWithValue("@AMOUNT", trans.Amount);
+                //cmd2.Parameters.AddWithValue("@AMOUNT", trans.Amount);
                 cmd2.Parameters.AddWithValue("@ACCOUNTNUMBER_DEBITED", trans.AccountNumber_Debited);
 
                 SqlCommand cmd3 = new SqlCommand("update [dbo].[UserAccount] set U_BALANCE=U_BALANCE+1000 where U_ACCOUNTNUMBER=@ACCOUNTNUMBER_CREDITED", conn);
-                cmd3.Parameters.AddWithValue("@AMOUNT", trans.Amount);
+               //cmd3.Parameters.AddWithValue("@AMOUNT", trans.Amount);
                 cmd3.Parameters.AddWithValue("@ACCOUNTNUMBER_CREDITED", trans.AccountNumber_Credited);
                 //cmd1.Parameters.AddWithValue("@AMT", trans.Amount);
 
@@ -60,6 +60,7 @@ public class DBUtils
                     
 
                     transObj.Commit();
+                    return trans;
                 }
                 catch (Exception ex)
                 {

@@ -32,7 +32,7 @@ namespace WebAPIServiceII.Controllers
             //string TransNumber = "DU" + generator.Next(0, 99999);
             //trans.TransactionNumber = TransNumber;
 
-            return du.AddTransactions(trans);
+            return du.UpdateTransactions(trans);
         }
     }
 }
