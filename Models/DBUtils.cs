@@ -33,7 +33,7 @@ public class DBUtils
             using (SqlConnection conn = new SqlConnection(cb.ConnectionString))
             {
                 conn.Open();
-                transObj = conn.BeginTransaction();
+                
 
                /* SqlCommand cmd1 = new SqlCommand("INSERT INTO Transactions VALUES (@ACCOUNTNUMBER_DEBITED, @ACCOUNTNUMBER_CREDITED, @AMOUNT, @TRANSACTIONNUMBER, @Date)", conn);
                                
@@ -52,7 +52,9 @@ public class DBUtils
                //cmd3.Parameters.AddWithValue("@AMOUNT", trans.Amount);
                 cmd3.Parameters.AddWithValue("@ACCOUNTNUMBER_CREDITED", trans.AccountNumber_Credited);
                 //cmd1.Parameters.AddWithValue("@AMT", trans.Amount);
-
+                transObj = conn.BeginTransaction();
+                cmd2.Transaction = transObj;
+                cmd3.Transaction = transObj;
                 try {
                   //  cmd1.ExecuteNonQuery();
                     cmd2.ExecuteNonQuery();
