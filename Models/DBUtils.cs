@@ -110,10 +110,10 @@ public class DBUtils
                     {
                         transaction = new Transactions();
                         transaction.Tid = result["T_ID"];
-                        transaction.AccountNumber_Debited = result["ACCOUNTNUMBER_DEBITED"].ToString();
-                        transaction.AccountNumber_Credited = result["ACCOUNTNUMBER_CREDITED"].ToString();
-                        transaction.Amount = result["AMOUNT"].ToString();
-                        transaction.TransactionNumber = result["TRANSACTIONNUMBER"];
+                        transaction.AccountNumber_Debited = result["ACCOUNTNUMBER_DEBITED"];
+                        transaction.AccountNumber_Credited = result["ACCOUNTNUMBER_CREDITED"];
+                        transaction.Amount = result["AMOUNT"];
+                        transaction.TransactionNumber = result["TRANSACTIONNUMBER"].ToString();
                         transaction.date = result["Date"].ToString();
                        
 
