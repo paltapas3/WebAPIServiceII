@@ -61,9 +61,12 @@ public class DBUtils
                 cmd1.Transaction = transObj;
                 try {
                   //  cmd1.ExecuteNonQuery();
-                    cmd2.ExecuteNonQuery();
-                    cmd3.ExecuteNonQuery();
-                    cmd1.ExecuteNonQuery();
+                    int debit=cmd2.ExecuteNonQuery();
+                    int credit=cmd3.ExecuteNonQuery();
+                    if (debit > 0 && credit > 0)
+                    {
+                        cmd1.ExecuteNonQuery();
+                    }
 
                     transObj.Commit();
                     return trans;
